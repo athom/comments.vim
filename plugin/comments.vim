@@ -145,6 +145,11 @@ function! CommentLine()
     endif
     " .html,.xml,.xthml,.htm
   elseif file_name =~ '\.html$' || file_name =~ '\.htm$' || file_name =~ '\.xml$' || file_name =~ '\.xhtml$' 
+    if DetectScrptTag()
+      execute ":silent! normal ^i//\<ESC>\<down>^"
+      return
+    endif 
+
     if stridx( getline("."), "\<!--" ) != -1 && stridx( getline("."), "--\>" ) != -1
     elseif stridx( getline("."), "\<!--" ) != -1 && stridx( getline("."), "--\>" ) == -1
         "  open, but a close "
@@ -209,6 +214,10 @@ function! UnCommentLine()
     execute ":silent! normal :nohlsearch\<CR>:s/\\#//\<CR>:nohlsearch\<CR>"
   " for .xml .html .xhtml .htm use <!-- -->
   elseif file_name =~ '\.html$' || file_name =~ '\.htm$' || file_name =~ '\.xml$' || file_name =~ '\.xhtml$' 
+    if DetectScrptTag()
+      execute ":silent! normal :nohlsearch\<CR>:s/\\/\\///\<CR>:nohlsearch\<CR>\<down>"
+      return
+    endif 
     execute ":silent! normal :nohlsearch\<CR>:s/<!--//\<CR>"
     execute ":silent! normal :nohlsearch\<CR>:s/-->//\<CR>"
   " for .tex use %
@@ -257,6 +266,10 @@ function! RangeCommentLine()
     endif
   " .html,.xml,.xthml,.htm
   elseif file_name =~ '\.html$' || file_name =~ '\.htm$' || file_name =~ '\.xml$' || file_name =~ '\.xhtml$' 
+    if DetectScrptTag()
+      execute ":silent! normal :s/\\S/\\/\\/\\0/\<CR>:nohlsearch<CR>"
+      return
+    endif 
     if stridx( getline("."), "\<!--" ) != -1 && stridx( getline("."), "--\>" ) != -1
     elseif stridx( getline("."), "\<!--" ) != -1 && stridx( getline("."), "--\>" ) == -1
         "  open, but a close "
@@ -323,6 +336,10 @@ function! RangeUnCommentLine()
     execute ":silent! normal :nohlsearch\<CR>:s/\\*)//\<CR>"
   " for .xml .html .xhtml .htm use <!-- -->
   elseif file_name =~ '\.html$' || file_name =~ '\.htm$' || file_name =~ '\.xml$' || file_name =~ '\.xhtml$' 
+    if DetectScrptTag()
+      execute ":silent! normal :s/\\/\\///\<CR>:nohlsearch\<CR>"
+      return
+    endif 
     execute ":silent! normal :nohlsearch\<CR>:s/<!--//\<CR>"
     execute ":silent! normal :nohlsearch\<CR>:s/-->//\<CR>"
   elseif file_name =~ '\.[kc]\?sh$' || file_name =~ '\.pl$' || file_name =~ '\.pm$'
@@ -348,3 +365,12 @@ function! RangeUnCommentLine()
   endif
 endfunction
 
+" function to detect embeded script tag in html file
+function DetectScrptTag()
+  let start_tag_line = search("\<script", 'bn')
+  let end_tag_line = search("\<\/script\>", 'n')
+  let current_line = line(".")
+  if current_line > start_tag_line && current_line < end_tag_line
+    return  1
+  endif
+endfunction
