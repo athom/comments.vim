@@ -367,10 +367,10 @@ endfunction
 
 " function to detect embeded script tag in html file
 function DetectScrptTag()
-  let start_tag_line = search("\<script", 'bn')
-  let end_tag_line = search("\<\/script\>", 'n')
-  let current_line = line(".")
-  if current_line > start_tag_line && current_line < end_tag_line
+  let l:start_tag_line = search("\<script", 'bn')
+  let l:end_tag_line = search("\<\/script\>", 'n')
+  let l:current_line = line(".")
+  if l:current_line > l:start_tag_line && l:current_line < end_tag_line
     return  1
   endif
 endfunction
