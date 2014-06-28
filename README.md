@@ -10,6 +10,7 @@ The following are the changes that I have done to the original Plugin
 - Added support for Golang (.go) (by [Athom](https://github.com/athom))
 - Added support for remapping the keys if needed
 - Added support for Clojure and ClojureScript (by [seedano](https://github.com/ssedano/))
+- Added support for Erlang (.erl) (by [Athom](https://github.com/athom))
 
 Credit goes to the original author Jasmeet Singh Anand.
 
@@ -69,4 +70,4 @@ ctrl-c to comment a single line
 ctrl-x to un-comment a single line
 shift-v and select multiple lines, then ctrl-c to comment the selected multiple lines
 shift-v and select multiple lines, then ctrl-x to un-comment the selected multiple lines
-supports: c, c++, java, php[2345], proc, css, html, htm, xml, xhtml, vim, vimrc, sql, sh, ksh, csh, perl, tex, fortran, ml, caml, ocaml, vhdl, haskel and normal files
+supports: c, c++, java, php[2345], proc, css, html, htm, xml, xhtml, vim, vimrc, sql, sh, ksh, csh, perl, tex, fortran, ml, caml, ocaml, vhdl, haskel, erlang and normal files
